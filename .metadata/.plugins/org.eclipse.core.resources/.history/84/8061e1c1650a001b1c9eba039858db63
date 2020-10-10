@@ -1,0 +1,51 @@
+package com.qa.crm.testcases;
+
+import static org.testng.Assert.assertEquals;
+
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import com.crm.qa.base.TestBase;
+import com.crm.qa.pages.HomePage;
+import com.crm.qa.pages.LoginPage;
+import com.crm.qa.util.TestUtil;
+
+public class HomePageTest extends TestBase{
+	
+	LoginPage loginpage;
+	HomePage homepage;
+	TestUtil testuTil;
+	
+	public HomePageTest() {
+		super();
+	}
+	
+	@BeforeMethod
+	public void setup() {
+		initializaton();
+		loginpage = new LoginPage();
+		homepage = loginpage.Login(prop.getProperty("username"), prop.getProperty("password"));
+		
+	}
+	
+	@Test(priority=0)
+	public void verifyHomePageTitle() {
+		String homePageTitle = homepage.verifyHomepageTitle();
+		assertEquals(homePageTitle, "CRMPRO","Home Page Title Not Matched");
+	}
+	
+	@Test(priority=1)
+	public void verifyUseronHomePage() {
+		testuTil.switchtoFrame();
+		boolean ssflag = homepage.verifyuserLogin();
+		System.out.println("Return From here--->"+ssflag);	
+	}
+		
+	
+	@AfterMethod
+	public void tearDown() {
+		driver.quit();
+	}
+
+}

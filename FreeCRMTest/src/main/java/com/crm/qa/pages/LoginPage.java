@@ -1,0 +1,55 @@
+package com.crm.qa.pages;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.crm.qa.base.TestBase;
+
+public class LoginPage extends TestBase{
+	
+	@FindBy(name="username")
+	WebElement username;
+	
+	@FindBy(name="password")
+	WebElement password;
+	
+	@FindBy(xpath="//input[@type='submit']")
+	WebElement loginbtn;
+	
+//	@FindBy(xpath="//img[@class='img-responsive'][@src='https://classic.freecrm.com/img/logo@2x.png']")
+	@FindBy(xpath="//a[@href='https://classic.freecrm.com/index.html']")
+	WebElement crmLogo;
+
+	public LoginPage() {
+		PageFactory.initElements(driver, this);//this constructor is used to initialize all the object (so in our case it is above mentioned web element
+											   // and this is used to initialize the current class object, in place of this we can write LoginPage.class
+//		PageFactory.initElements(driver, LoginPage.class);
+	}
+
+	public String validateLoginPageTitle() {
+		return driver.getTitle();
+		
+	}
+	
+	public boolean validateCRMImage() {
+		WebDriverWait wait = new WebDriverWait(driver, 50);
+		wait.until(ExpectedConditions.visibilityOf(crmLogo));
+		return crmLogo.isDisplayed();
+		
+	}
+	
+	public HomePage Login(String userName, String passwd) {
+		username.sendKeys(userName);
+		password.sendKeys(passwd);
+		loginbtn.click();
+		
+		return new HomePage();
+	}
+	
+	
+	
+}

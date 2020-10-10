@@ -1,0 +1,58 @@
+package com.crm.qa.base;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import com.crm.qa.util.TestUtil;
+
+public class TestBase {
+	
+	public static WebDriver driver;
+	static Properties prop;
+	
+	
+	public TestBase(){
+		prop = new Properties();
+//		String current = System.getProperty("user.dir");
+		try {
+			FileInputStream ip = new FileInputStream("D:\\SeleniumFramework\\FreeCRMTest\\src\\main\\java\\com\\crm\\qa\\config\\config.properties");
+			prop.load(ip);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public static void initializaton() {
+		String browserName = prop.getProperty("browser");
+		if(browserName.equals("chrome")) {
+			System.setProperty("webdriver.chrome.driver", "D:\\ChromeWebDriver\\chromedriver.exe");
+			driver = new ChromeDriver();
+		}
+		
+		driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
+		/*
+		 Selenium defines different timeouts and wait mechanisms. One of the timeouts is focused on the time a
+		 webpage needs to be loaded – the pageLoadTimeout limits the time that the script allots for a web page to be 
+		 displayed. If the page loads within the time then the script continues. If the page does not load within the timeout the 
+		 script will be stopped by a TimeoutException.
+		 */
+		driver.manage().timeouts().pageLoadTimeout(TestUtil.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(TestUtil.IMPLICIT_WAIT, TimeUnit.SECONDS);
+		driver.get(prop.getProperty("url"));
+		
+	}
+	
+
+}

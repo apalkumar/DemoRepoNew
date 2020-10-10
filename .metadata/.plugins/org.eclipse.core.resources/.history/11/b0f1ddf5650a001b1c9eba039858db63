@@ -1,0 +1,56 @@
+package com.crm.qa.pages;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+import com.crm.qa.base.TestBase;
+
+public class HomePage extends TestBase extends TestUtils {
+	
+	@FindBy(xpath="//td[contains(text(),'Demo User')]")
+	WebElement userloggedin;
+	
+	@FindBy(xpath="//a[contains(text(),'Contacts')]")
+	WebElement Contacts;
+	
+	@FindBy(xpath="//a[contains(text(),'Deals')]")
+	WebElement Deals;
+	
+	@FindBy(xpath="//a[contains(text(),'Tasks')]")
+	WebElement Tasks;
+	
+	@FindBy(xpath="//td[contains(text(),'Demo User')]")
+	WebElement userLanded;
+	
+	public HomePage() {
+		PageFactory.initElements(driver, this);
+	}
+	
+	public String verifyHomepageTitle() {
+		String homepageTitle = driver.getTitle();
+		return homepageTitle;
+	}
+	
+	public boolean verifyuserLogin() {
+//		driver.switchTo().frame("mainpanel");
+		
+		boolean sflag = userLanded.isDisplayed();
+		return sflag; 
+	}
+	
+	public ContactsPage clickonContacts() {
+		Contacts.click();
+		return new ContactsPage();
+	}
+
+	public DealsPage clickonDeals() {
+		Deals.click();
+		return new DealsPage();
+	}
+	
+	public TasksPage clickonTasks() {
+		Deals.click();
+		return new TasksPage();
+	}
+}

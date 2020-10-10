@@ -1,0 +1,20 @@
+package com.qa.crm.testcases;
+
+import org.testng.annotations.BeforeMethod;
+
+import com.crm.qa.base.TestBase;
+
+public class LoginPageTest extends TestBase{
+	
+	
+	
+	public LoginPageTest(){
+		super();
+	}
+	
+	@BeforeMethod
+	public void setup() {
+		initializaton();
+	}
+
+}

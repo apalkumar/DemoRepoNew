@@ -1,0 +1,26 @@
+package com.qa.crm.testcases;
+
+import org.testng.annotations.BeforeMethod;
+
+import com.crm.qa.base.TestBase;
+import com.crm.qa.pages.HomePage;
+import com.crm.qa.pages.LoginPage;
+
+public class HomePageTest extends TestBase{
+	
+	LoginPage loginpage;
+	HomePage homepage;
+	
+	public HomePageTest() {
+		super();
+	}
+	
+	@BeforeMethod
+	public void setup() {
+		initializaton();
+		loginpage = new LoginPage();
+		homepage = loginpage.Login(prop.getProperty("username"), prop.getProperty("password"));
+		
+	}
+
+}
